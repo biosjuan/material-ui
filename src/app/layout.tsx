@@ -2,8 +2,13 @@ import ThemeRegistry from '@/ThemeRegistry/ThemeRegistry';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import NavDrawer from '@/Components/Scalfold/NavDrawer';
+import TopBar from '@/Components/Scalfold/TopBar';
+import MainBar from '@/Components/Scalfold/TopBar';
 
 const inter = Inter({ subsets: ['latin'] });
+
+const drawerWidth = 240;
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -18,7 +23,17 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <ThemeRegistry>
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          <NavDrawer />
+          <main
+            style={{
+              marginLeft: drawerWidth,
+              padding: 3,
+            }}
+          >
+            {children}
+          </main>
+        </body>
       </ThemeRegistry>
     </html>
   );
