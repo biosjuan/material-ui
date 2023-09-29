@@ -38,7 +38,7 @@ function NavDrawer() {
     { text: 'Input Form', route: '/form' },
     { text: 'Contact Card Grid', route: '/grid' },
     { text: 'Contact Table', route: '/table' },
-    { text: 'Contact Data Grid', route: 'grid' },
+    { text: 'Contact Data Grid', route: '/dataGrid' },
   ];
   const theme = useTheme();
 
@@ -52,6 +52,7 @@ function NavDrawer() {
         </Toolbar>
       </AppBar>
       <Drawer
+        disableEnforceFocus
         variant='temporary'
         open={true}
         sx={simpleStyles.drawer}
