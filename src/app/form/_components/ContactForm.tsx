@@ -5,6 +5,7 @@ import {
   Autocomplete,
   AutocompleteInputChangeReason,
   Button,
+  Checkbox,
   Dialog,
   FormControl,
   FormControlLabel,
@@ -33,10 +34,45 @@ import BeatifulSelect from './_formSubComponent/BeatifulSelect';
 import BeatifulDesktopDatePicker from './_formSubComponent/BeatifulDesktopDatePicker';
 import BeautifulRadios from './_formSubComponent/BeatifulRadios';
 
+import { useTheme } from '@mui/material/styles';
+import { StyledFormGroup } from './_formSubComponent/StyledFormGroup';
+
 export const minWidth = 300;
 export const defaultPreference = 'Work From Home';
 
+const skills = [
+  'React',
+  'Angular',
+  'Python',
+  'NodeJS',
+  'Machine Learning',
+  'UI/UX Design',
+  'Illustrator',
+  'Manual Testing',
+  'Test Automation',
+  'Docker',
+  'Jenkins',
+  'Leadership',
+  'Project Management',
+];
+
+const paperInputStyle = {
+  '& .MuiOutlinedInput-root': {
+    '& > fieldset': {
+      border: '1px solid',
+      borderColor: 'primary.main',
+    },
+    '&:hover': {
+      '& > fieldset': { borderColor: 'primary.light' },
+    },
+  },
+  '& .MuiFormLabel-root': {
+    color: 'primary.dark',
+  },
+};
+
 function ContactForm() {
+  const theme = useTheme();
   const today = new Date();
   const getDefaultFormValues = () => {
     return {
@@ -133,16 +169,18 @@ function ContactForm() {
 
   return (
     <>
-      <Paper>
+      <Paper
+        sx={{
+          ...paperInputStyle,
+          margin: { xs: 1, sm: 2 },
+          zIndex: theme.zIndex.appBar + 1,
+          '&:hover': { backgroundColor: 'rgba(0,0,0,0.1)' },
+          '& button.MuiButton-text': { backgroundColor: 'primary.light' },
+        }}
+      >
         <form>
           <FormControl>
-            <FormGroup
-              row
-              sx={{
-                padding: 2,
-                justifyContent: 'space-between',
-              }}
-            >
+            <StyledFormGroup row paddingtop={10}>
               <BeatifulTextField
                 value={formValues.name}
                 onChange={handleTextFiledChange}
@@ -151,7 +189,7 @@ function ContactForm() {
                 value={formValues.role || ''}
                 onInputChange={handleAutoComplete}
               />
-            </FormGroup>
+            </StyledFormGroup>
             <FormGroup
               row
               sx={{
@@ -162,7 +200,18 @@ function ContactForm() {
               <BeatifulSelect
                 onChange={handleSelectChange}
                 value={formValues.skills || ''}
-              />
+              >
+                {skills.map((skillName) => {
+                  return (
+                    <MenuItem value={skillName} key={skillName}>
+                      <Checkbox
+                        checked={formValues.skills?.includes(skillName)}
+                      />
+                      <ListItemText primary={skillName} />
+                    </MenuItem>
+                  );
+                })}
+              </BeatifulSelect>
               <BeatifulDesktopDatePicker
                 value={dayjs(formValues.startDate)}
                 onChange={hanldeDayPickerChange}

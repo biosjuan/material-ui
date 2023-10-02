@@ -26,7 +26,15 @@ function BeatifulAutoComplete(props: {
       {...props}
       options={roles}
       renderInput={(params) => {
-        return <TextField name='role' {...params} />;
+        return (
+          <TextField
+            name='role'
+            {...params}
+            sx={{
+              '& .MuiOutlineInput-root.Mui-focused': { color: 'primary.dark' },
+            }}
+          />
+        );
       }}
       getOptionLabel={(roleOption) => `${roleOption}`}
       renderOption={(props, option) => {
@@ -34,6 +42,21 @@ function BeatifulAutoComplete(props: {
       }}
       sx={{ minWidth }}
       isOptionEqualToValue={(option, value) => option === value || value === ''}
+      ListboxProps={{
+        sx: {
+          height: 100,
+          color: 'primary.dark',
+          '& li.MuiAutocomplete-option:nth-child(even)': {
+            background: 'green',
+          },
+          '& li.MuiAutocomplete-option:hover': {
+            background: 'gold',
+          },
+          '& li.MuiAutocomplete-option[aria-selected="true"].Mui-focused': {
+            background: 'gold',
+          },
+        },
+      }}
     />
   );
 }

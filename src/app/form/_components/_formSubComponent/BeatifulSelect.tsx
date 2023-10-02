@@ -1,49 +1,42 @@
-import {
-  ListItemText,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-} from '@mui/material';
+import { Select, SelectChangeEvent } from '@mui/material';
 import { minWidth } from '../ContactForm';
-
-const skills = [
-  'React',
-  'Angular',
-  'Python',
-  'NodeJS',
-  'Machine Learning',
-  'UI/UX Design',
-  'Illustrator',
-  'Manual Testing',
-  'Test Automation',
-  'Docker',
-  'Jenkins',
-  'Leadership',
-  'Project Management',
-];
+import { ReactNode, useEffect, useRef, useState } from 'react';
 
 function BeatifulSelect(props: {
   value: string[] | '' | undefined;
+  children: ReactNode[];
   onChange: (
     event: SelectChangeEvent<string[]>,
     child: React.ReactNode
   ) => void;
 }) {
+  const selectInputComponent = useRef<HTMLInputElement>(null);
+  const [position, setPosition] = useState(0);
+  useEffect(() => {
+    setPosition(
+      selectInputComponent.current
+        ? selectInputComponent.current.getBoundingClientRect().left + 20
+        : 0
+    );
+  }, [selectInputComponent]);
   return (
     <Select
+      ref={selectInputComponent}
       {...props}
       id='skill-select'
       renderValue={(selected: string[]) => selected.join(', ')}
       sx={{ minWidth: minWidth, marginRight: 2 }}
       multiple
+      MenuProps={{
+        PaperProps: {
+          sx: {
+            left: `${position}px !important`,
+            maxHeight: 200,
+          },
+        },
+      }}
     >
-      {skills.map((skillName) => {
-        return (
-          <MenuItem value={skillName} key={skillName}>
-            <ListItemText primary={skillName} />
-          </MenuItem>
-        );
-      })}
+      {props.children}
     </Select>
   );
 }
