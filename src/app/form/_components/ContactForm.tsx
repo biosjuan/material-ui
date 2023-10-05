@@ -175,67 +175,71 @@ function ContactForm() {
           margin: { xs: 1, sm: 2 },
           zIndex: theme.zIndex.appBar + 1,
           '&:hover': { backgroundColor: 'rgba(0,0,0,0.1)' },
-          '& button.MuiButton-text': { backgroundColor: 'primary.light' },
+          backgroundColor: 'grid.main',
+          // '& button.MuiButton-text': { backgroundColor: 'primary.light' },
         }}
       >
         <form>
-          <FormControl>
-            <StyledFormGroup row paddingtop={10}>
-              <BeatifulTextField
-                value={formValues.name}
-                onChange={handleTextFiledChange}
-              />
-              <BeatifulAutoComplete
-                value={formValues.role || ''}
-                onInputChange={handleAutoComplete}
-              />
-            </StyledFormGroup>
-            <FormGroup
-              row
-              sx={{
-                padding: 2,
-                justifyContent: 'space-between',
-              }}
+          <StyledFormGroup row paddingtop={10}>
+            <BeatifulTextField
+              value={formValues.name}
+              onChange={handleTextFiledChange}
+            />
+            <BeatifulAutoComplete
+              value={formValues.role || ''}
+              onInputChange={handleAutoComplete}
+            />
+          </StyledFormGroup>
+          <StyledFormGroup row>
+            <BeatifulSelect
+              onChange={handleSelectChange}
+              value={formValues.skills || ''}
             >
-              <BeatifulSelect
-                onChange={handleSelectChange}
-                value={formValues.skills || ''}
+              {skills.map((skillName) => {
+                return (
+                  <MenuItem value={skillName} key={skillName}>
+                    <Checkbox
+                      checked={formValues.skills?.includes(skillName)}
+                    />
+                    <ListItemText primary={skillName} />
+                  </MenuItem>
+                );
+              })}
+            </BeatifulSelect>
+            <BeatifulDesktopDatePicker
+              value={dayjs(formValues.startDate)}
+              onChange={hanldeDayPickerChange}
+            />
+          </StyledFormGroup>
+          <StyledFormGroup row>
+            <FormGroup sx={{ minWidth, marginRight: 2 }}>
+              <BeautifulRadios
+                preference={formValues.preference}
+                handleRadioChange={handleRadioChange}
+              />
+            </FormGroup>
+            <Stack
+              direction='column'
+              justifyContent='space-around'
+              alignItems='flex-end'
+              sx={{ minWidth: minWidth }}
+            >
+              <Button
+                variant='contained'
+                sx={{ height: 56, width: 100 }}
+                onClick={handleSubmit}
               >
-                {skills.map((skillName) => {
-                  return (
-                    <MenuItem value={skillName} key={skillName}>
-                      <Checkbox
-                        checked={formValues.skills?.includes(skillName)}
-                      />
-                      <ListItemText primary={skillName} />
-                    </MenuItem>
-                  );
-                })}
-              </BeatifulSelect>
-              <BeatifulDesktopDatePicker
-                value={dayjs(formValues.startDate)}
-                onChange={hanldeDayPickerChange}
-              />
-            </FormGroup>
-            <FormGroup
-              row
-              sx={{
-                padding: 2,
-                justifyContent: 'space-between',
-              }}
-            >
-              <FormGroup sx={{ minWidth, marginRight: 2 }}>
-                <BeautifulRadios
-                  preference={formValues.preference}
-                  handleRadioChange={handleRadioChange}
-                />
-              </FormGroup>
-              <Stack>
-                <Button onClick={handleSubmit}>Submit</Button>
-                <Button onClick={handleClearClick}>Clear</Button>
-              </Stack>
-            </FormGroup>
-          </FormControl>
+                Submit
+              </Button>
+              <Button
+                variant='beautiful'
+                sx={{ height: 56, width: 100 }}
+                onClick={handleClearClick}
+              >
+                Clear
+              </Button>
+            </Stack>
+          </StyledFormGroup>
         </form>
       </Paper>
       <Dialog open={alertOpen} onClose={handleAlertClick}>

@@ -17,6 +17,7 @@
     "@mui/material": "^5.14.11",
     "@mui/x-data-grid": "^6.15.0",
     "@mui/x-date-pickers": "^6.15.0",
+    "@tanstack/react-table": "^8.10.3",
     "dayjs": "^1.11.10",
     "next": "latest",
     "react": "latest",

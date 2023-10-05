@@ -29,7 +29,7 @@ export default function RootLayout({
             style={{
               marginLeft: drawerWidth,
               padding: 10,
-              maxWidth: 720,
+              maxWidth: 1000,
             }}
           >
             {children}

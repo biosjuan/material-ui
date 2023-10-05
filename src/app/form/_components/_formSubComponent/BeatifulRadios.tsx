@@ -17,7 +17,7 @@ export default function BeautifulRadios(props: {
   ) => void;
 }) {
   return (
-    <FormControl>
+    <FormControl disabled>
       <FormGroup
         sx={{
           minWidth: minWidth,
